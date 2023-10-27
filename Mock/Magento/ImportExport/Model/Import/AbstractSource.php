@@ -26,25 +26,15 @@ abstract class AbstractSource implements \SeekableIterator
     }
 
     /**
-     * Column names getter.
-     *
-     * @return array
-     */
-    public function getColNames()
-    {
-        return [];
-    }
-
-    /**
      * Return the current element
      *
      * Returns the row in associative array format: array(<col_name> => <value>, ...)
      *
      * @return array
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
-        return [];
     }
 
     /**
@@ -52,27 +42,19 @@ abstract class AbstractSource implements \SeekableIterator
      *
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function next()
     {
     }
-
-    /**
-     * Render next row
-     *
-     * Return array or false on error
-     *
-     * @return array|false
-     */
-    abstract protected function _getNextRow();
 
     /**
      * Return the key of the current element (\Iterator interface)
      *
      * @return int -1 if out of bounds, 0 or more otherwise
      */
+    #[\ReturnTypeWillChange]
     public function key()
     {
-        return -1;
     }
 
     /**
@@ -80,9 +62,9 @@ abstract class AbstractSource implements \SeekableIterator
      *
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function valid()
     {
-        return false;
     }
 
     /**
@@ -90,6 +72,7 @@ abstract class AbstractSource implements \SeekableIterator
      *
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function rewind()
     {
     }
@@ -101,7 +84,7 @@ abstract class AbstractSource implements \SeekableIterator
      * @return void
      * @throws \OutOfBoundsException
      */
-    public function seek(int $offset): void
+    #[\ReturnTypeWillChange]
+    public function seek($position)
     {
-    }
-}
+    }}
