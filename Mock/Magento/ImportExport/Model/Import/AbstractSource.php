@@ -101,7 +101,7 @@ abstract class AbstractSource implements \SeekableIterator
      * @return void
      * @throws \OutOfBoundsException
      */
-    public function seek(int $offset): \SeekableIterator
+    public function seek(int $offset): void
     {
     }
 }
