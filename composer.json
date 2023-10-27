@@ -1,14 +1,21 @@
 {
     "name": "fishpig/magento2-remove-import-export",
-    "description": "Remove ImportExport.",
-    "type": "project",
-    "version": "1.0.1",
+    "description": "Remove all Magento 2 import export modules.",
+    "version": "1.0.2",
     "autoload": {
         "psr-4": {
-            "Magento\\ImportExport\\": "Mock/Magento/ImportExport"
+            "Magento\\ImportExport\\": "Mock/Magento/ImportExport",
+            "Magento\\CatalogImportExport\\": "Mock/Magento/CatalogImportExport"
         }
     },
     "replace": {
-        "magento/module-import-export": "*"
+        "magento/module-import-export": "*",
+        "magento/module-catalog-import-export": "*",
+        "magento/module-customer-import-export": "*",
+        "magento/module-configurable-import-export": "*",
+        "magento/module-advanced-pricing-import-export": "*",
+        "magento/module-grouped-import-export": "*",
+        "magento/module-inventory-import-export": "*",
+        "magento/module-tax-import-export": "*"
     }
 }

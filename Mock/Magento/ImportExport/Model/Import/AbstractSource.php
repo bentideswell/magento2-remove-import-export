@@ -16,39 +16,6 @@ use Magento\ImportExport\Model\Import\AbstractEntity;
 abstract class AbstractSource implements \SeekableIterator
 {
     /**
-     * @var array
-     */
-    protected $_colNames = [];
-
-    /**
-     * Quantity of columns
-     *
-     * @var int
-     */
-    protected $_colQty;
-
-    /**
-     * Current row
-     *
-     * @var array
-     */
-    protected $_row = [];
-
-    /**
-     * Current row number
-     *
-     * -1 means "out of bounds"
-     *
-     * @var int
-     */
-    protected $_key = -1;
-
-    /**
-     * @var bool
-     */
-    protected $_foundWrongQuoteFlag = false;
-
-    /**
      * Get and validate column names
      *
      * @param array $colNames
@@ -56,14 +23,6 @@ abstract class AbstractSource implements \SeekableIterator
      */
     public function __construct(array $colNames)
     {
-        if (empty($colNames)) {
-            throw new \InvalidArgumentException('Empty column names');
-        }
-        if (count(array_unique($colNames)) != count($colNames)) {
-            throw new \InvalidArgumentException('Duplicates found in column names: ' . var_export($colNames, 1));
-        }
-        $this->_colNames = $colNames;
-        $this->_colQty = count($colNames);
     }
 
     /**
@@ -73,7 +32,7 @@ abstract class AbstractSource implements \SeekableIterator
      */
     public function getColNames()
     {
-        return $this->_colNames;
+        return [];
     }
 
     /**
@@ -85,15 +44,7 @@ abstract class AbstractSource implements \SeekableIterator
      */
     public function current()
     {
-        $row = $this->_row;
-        if (count($row) != $this->_colQty) {
-            if ($this->_foundWrongQuoteFlag) {
-                throw new \InvalidArgumentException(AbstractEntity::ERROR_CODE_WRONG_QUOTES);
-            } else {
-                throw new \InvalidArgumentException(AbstractEntity::ERROR_CODE_COLUMNS_NUMBER);
-            }
-        }
-        return array_combine($this->_colNames, $row);
+        return [];
     }
 
     /**
@@ -103,14 +54,6 @@ abstract class AbstractSource implements \SeekableIterator
      */
     public function next()
     {
-        $this->_key++;
-        $row = $this->_getNextRow();
-        if (false === $row || [] === $row) {
-            $this->_row = [];
-            $this->_key = -1;
-        } else {
-            $this->_row = $row;
-        }
     }
 
     /**
@@ -129,7 +72,7 @@ abstract class AbstractSource implements \SeekableIterator
      */
     public function key()
     {
-        return $this->_key;
+        return -1;
     }
 
     /**
@@ -139,7 +82,7 @@ abstract class AbstractSource implements \SeekableIterator
      */
     public function valid()
     {
-        return -1 !== $this->_key;
+        return false;
     }
 
     /**
@@ -149,9 +92,6 @@ abstract class AbstractSource implements \SeekableIterator
      */
     public function rewind()
     {
-        $this->_key = -1;
-        $this->_row = [];
-        $this->next();
     }
 
     /**
@@ -161,22 +101,7 @@ abstract class AbstractSource implements \SeekableIterator
      * @return void
      * @throws \OutOfBoundsException
      */
-    public function seek($position)
+    public function seek(int $offset): \SeekableIterator
     {
-        if ($position == $this->_key) {
-            return;
-        }
-        if (0 == $position || $position < $this->_key) {
-            $this->rewind();
-        }
-        if ($position > 0) {
-            do {
-                $this->next();
-                if ($this->_key == $position) {
-                    return;
-                }
-            } while ($this->_key != -1);
-        }
-        throw new \OutOfBoundsException('Please correct the seek position.');
     }
 }

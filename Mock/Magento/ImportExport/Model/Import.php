@@ -137,14 +137,7 @@ class Import extends \Magento\Framework\DataObject
      */
     public static function getAttributeType(AbstractAttribute $attribute)
     {
-        $frontendInput = $attribute->getFrontendInput();
-        if ($attribute->usesSource() && in_array($frontendInput, ['select', 'multiselect', 'boolean'])) {
-            return $frontendInput;
-        } elseif ($attribute->isStatic()) {
-            return $frontendInput == 'date' ? 'datetime' : 'varchar';
-        } else {
-            return $attribute->getBackendType();
-        }
+        return '';
     }
 
     /**
@@ -187,7 +180,7 @@ class Import extends \Magento\Framework\DataObject
      */
     public function getProcessedEntitiesCount()
     {
-        return $this->_getEntityAdapter()->getProcessedEntitiesCount();
+        return 0;
     }
 
     /**
@@ -198,7 +191,7 @@ class Import extends \Magento\Framework\DataObject
      */
     public function getProcessedRowsCount()
     {
-        return $this->_getEntityAdapter()->getProcessedRowsCount();
+        return 0;
     }
 
     /**
@@ -208,7 +201,7 @@ class Import extends \Magento\Framework\DataObject
      */
     public function getWorkingDir()
     {
-        return $this->_varDirectory->getAbsolutePath('importexport/');
+        return '';
     }
 
     /**
