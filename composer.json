@@ -1,7 +1,7 @@
 {
     "name": "fishpig/magento2-remove-import-export",
     "description": "Remove all Magento 2 import export modules.",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "autoload": {
         "psr-4": {
             "Magento\\ImportExport\\": "Mock/Magento/ImportExport",
